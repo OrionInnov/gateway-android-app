@@ -1,6 +1,8 @@
 
 //udp服务器端
 
+//找到while循环中的dataJson，这是c4需要获取的数据
+
 package com.example.administrator.connect_to_anchor;
 
 import android.content.Intent;
@@ -115,6 +117,9 @@ public class UdpServer implements Runnable {
                     System.arraycopy(dpRcv.getData(), 0, anchorPosByte, 0, dpRcv.getLength());//截取接收到的对应长度bytes
                     String anchorPos = Base64.encodeToString(anchorPosByte,Base64.DEFAULT);//将bytes转换成base64字符串
                     String dateJson ="{\"pos_64\":\"" + anchorPos + "\",\"num\":\"" + lIp + "\"}";//将ip和base64数据放入json字符串
+
+                    //app启动后该线程自动启动，开始循环监听数据，需要通过c4软件在这个循环内不断把上面的dataJson传到服务器
+
                     byte[] bufJson = dateJson.getBytes();//json转换成bytes传输
                     InetAddress sIpAddress = InetAddress.getByName(sIp);//远程udp服务器ip
                     dpSend = new DatagramPacket(bufJson,bufJson.length,sIpAddress,sPort);//发送包
