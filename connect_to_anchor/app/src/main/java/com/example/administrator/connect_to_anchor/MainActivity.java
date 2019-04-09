@@ -1,3 +1,6 @@
+
+//c4需要的数据定义在UdpServer.java中
+
 package com.example.administrator.connect_to_anchor;
 
 import android.content.BroadcastReceiver;
@@ -161,9 +164,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void udpStart() {
         int mPort = Integer.parseInt("51000");//主端口（本地udp服务器端口）
-        int s_port = Integer.parseInt("60000");//从端口（远程udp服务器端口）
-        String ip = "";//主ip（本地udp服务器ip）
-        String s_ip = "192.168.100.10";//从ip（远程udp服务器ip）
+        int sPort = Integer.parseInt("60000");//从端口（远程udp服务器端口）
+        String mIp = "";//主ip（本地udp服务器ip）
+        String sIp = "192.168.100.10";//从ip（远程udp服务器ip）
         InetAddress address = null;
         try {
             LocalHostLANAddress HostLANAddress = new LocalHostLANAddress();
@@ -171,8 +174,8 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ip = address.getHostAddress();//本地ip地址
-        udpServer = new UdpServer(ip, mPort, s_ip, s_port);
+        mIp = address.getHostAddress();//本地ip地址
+        udpServer = new UdpServer(mIp, mPort, sIp, sPort);
         try {
             Thread thread = new Thread(udpServer);
             thread.start();//启动udp线程
